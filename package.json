@@ -4,7 +4,10 @@
   "description": "위너스톡 테마검색기",
   "main": "app/main.js",
   "scripts": {
-    "start": "electron ."
+    "postinstall" : "install-app-deps",
+    "start": "electron ./app --enable-logging",
+    "dev" : "NODE_ENV='developement' npm run start",
+    "dist" : "build -mwl --x64"
   },
   "dependencies": {
     "electron-json-storage": "^3.0.1"
@@ -15,5 +18,14 @@
   },
   "author": "REDPAGE",
   "license": "MIT",
-  "homepage" : "www.winnerstock.co.kr"
+  "homepage": "www.winnerstock.co.kr",
+  "devDependencies": {
+    "electron-builder": "^13.9.0"
+  },
+  "build": {
+    "appId": "kr.winnerstock.WTheme",
+    "win": {
+      "iconUrl": "http://www.winnerstock.co.kr/favicon.ico"
+    }
+  }
 }
