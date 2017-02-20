@@ -1,35 +1,28 @@
 {
-
-    "version": "0.1.0",
-
-    "configurations": [
-
-        { 
-
-            "name": "DEBUG",
-
-            "type": "node",
-
-            "program": "d:/electron/WTheme/app/main.js", // important
-
-            "stopOnEntry": false,
-
-            "args": [],
-
-            "cwd": ".",
-
-            // next line is very important
-
-            "runtimeExecutable": "d:/electron/WTheme/node_modules/electron/dist/electron.exe",
-
-            "runtimeArguments": [],
-
-            "env": { }, 
-
-            "sourceMaps": false
-
-        } 
-
-    ]
-
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "name": "Debug Main Process",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      //"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      // Use the following for Windows
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd",
+      "program": "${workspaceRoot}/src/main.js"
+    },
+    {
+      "name": "Debug Renderer Process",
+      "type": "chrome",
+      "request": "launch",
+      //"runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron",
+      // Use the following for Windows
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/electron.cmd",
+      "runtimeArgs": [
+        "${workspaceRoot}/src/main.js",
+        "--remote-debugging-port=9222"
+      ],
+      "webRoot": "${workspaceRoot}/src"
+    }
+  ]
 }

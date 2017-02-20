@@ -1,13 +1,22 @@
 {
   "name": "WTheme",
   "version": "1.0.0",
-  "description": "위너스톡 테마검색기",
-  "main": "app/main.js",
+  "description": "위너스톡 테마주검색기",
+  "main": "src/main.js",
   "scripts": {
-    "postinstall" : "install-app-deps",
-    "start": "electron ./app --enable-logging",
-    "dev" : "NODE_ENV='developement' npm run start",
-    "dist" : "build -mwl --x64"
+    "dev": "electron . --enable-logging",
+
+    "clean": "rm -rf ./dist",
+    "clean:osx": "rm -rf ./dist/osx",
+    "clean:win": "rm -rf ./dist/win",
+
+    "pack": "npm run clean && npm run pack:osx && npm run pack:win",
+    "pack:osx": "npm run clean:osx && electron-packager . \"WTheme Todo\" --out=dist/osx --platform=darwin --arch=x64 --version=0.36.2 --icon=assets/osx/logo.icns --ignore=dist --ignore=assets --ignore=builder.json --ignore=bower.json --ignore=README.md --ignore=.gitignore --ignore=preview.png",
+    "pack:win": "npm run clean:win && electron-packager . \"WTheme Todo\" --out=dist/win --platform=win32 --arch=ia32 --version=0.36.2 --icon=assets/win/icon.ico --ignore=dist --ignore=assets --ignore=builder.json --ignore=bower.json --ignore=README.md --ignore=.gitignore --ignore=preview.png",
+
+    "build": "npm run build:osx && npm run build:win",
+    "build:osx": "npm run pack:osx && electron-builder \"dist/osx/WTheme Todo-darwin-x64/EA Todo.app\" --platform=osx --out=\"dist/osx\" --config=builder.json",
+    "build:win": "npm run pack:win && electron-builder \"dist/win/WTheme Todo-win32-ia32\" --platform=win --out=\"dist/win\" --config=builder.json"
   },
   "dependencies": {
     "electron-json-storage": "^3.0.1"
@@ -20,12 +29,14 @@
   "license": "MIT",
   "homepage": "www.winnerstock.co.kr",
   "devDependencies": {
-    "electron-builder": "^13.9.0"
+    "electron-builder": "^13.9.0",
+    "electron-packager": "^8.5.1"
   },
   "build": {
     "appId": "kr.winnerstock.WTheme",
     "win": {
-      "iconUrl": "http://www.winnerstock.co.kr/favicon.ico"
+      "title" : "테마주검색기",
+      "iconUrl": "assets/win/icon.ico"
     }
   }
 }
